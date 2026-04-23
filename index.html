@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweta's Artverse | Custom Art & Commissions</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg-primary: #FDFBF7;
+            --color-bg-secondary: #F4E6D8;
+            --color-bg-tertiary: #FAF5F0;
+            --color-accent-pink: #FEDDE4;
+            --color-accent-rose: #C26F8A;
+            --color-text-main: #2A2A2A;
+            --color-text-light: #736768;
+            
+            --font-heading: 'DM Serif Display', serif;
+            --font-body: 'Nunito', sans-serif;
+        }
+
+        /* Highly refined ease-out transitions for luxury feel */
+       .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+       .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Apple-esque soft shadow utilities */
+       .shadow-premium {
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.06);
+        }
+       .shadow-premium-hover {
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12);
+        }
+
+        /* Cart Drawer Animation */
+       .cart-open {
+            transform: translateX(0%);
+        }
+       .cart-closed {
+            transform: translateX(100%);
+        }
+
+        /* Custom Scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5D3C5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C26F8A;
+        }
+    </style>
+</head>
+<body class="bg-bg-primary text-text-main font-body antialiased overflow-x-hidden selection:bg-accent-pink selection:text-text-main">
+
+    <nav id="main-navbar" class="fixed w-full top-0 z-40 bg-bg-primary/80 backdrop-blur-xl border-b border-text-main/5 transition-transform duration-300 will-change-transform translate-y-0">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12 py-5 flex justify-between items-center">
+            
+            <a href="#" class="text-3xl lg:text-4xl font-heading tracking-tight text-text-main hover:opacity-70 transition-opacity duration-300">Sweta's Artverse.</a>
+            
+            <div class="hidden md:flex space-x-10 items-center">
+                <a href="#philosophy" class="text-xs uppercase tracking-[0.2em] font-semibold text-text-main hover:text-accent-rose transition-colors duration-300">Philosophy</a>
+                <a href="#gallery" class="hidden text-xs uppercase tracking-[0.2em] font-semibold text-text-main hover:text-accent-rose transition-colors duration-300">Gallery</a>
+                <a href="#exhibitions" class="text-xs uppercase tracking-[0.2em] font-semibold text-text-main hover:text-accent-rose transition-colors duration-300">Exhibitions</a>
+                <a href="#instagram" class="text-xs uppercase tracking-[0.2em] font-semibold text-text-main hover:text-accent-rose transition-colors duration-300">Social</a>
+                
+                <button id="cart-toggle-btn" class="hidden relative group p-2 hover:bg-bg-secondary rounded-full transition-colors duration-300">
+                    <svg class="w-6 h-6 text-text-main group-hover:text-accent-rose transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-accent-rose text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center opacity-0 transition-opacity duration-300">0</span>
+                </button>
+
+                <a href="#commission" class="px-8 py-3 bg-text-main text-bg-primary rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-accent-rose hover:text-white transition-all duration-500 hover:shadow-premium">Inquire</a>
+            </div>
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="mobile-cart-toggle-btn" class="hidden relative p-2">
+                    <svg class="w-6 h-6 text-text-main" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-accent-rose text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center opacity-0">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="text-text-main focus:outline-none">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-bg-primary/95 backdrop-blur-xl border-b border-bg-secondary shadow-premium">
+            <div class="flex flex-col px-6 py-8 space-y-6 text-center">
+                <a href="#philosophy" class="text-xs uppercase tracking-[0.2em] text-text-main hover:text-accent-rose">Philosophy</a>
+                <a href="#gallery" class="hidden text-xs uppercase tracking-[0.2em] text-text-main hover:text-accent-rose">Gallery</a>
+                <a href="#exhibitions" class="text-xs uppercase tracking-[0.2em] text-text-main hover:text-accent-rose">Exhibitions</a>
+                <a href="#instagram" class="text-xs uppercase tracking-[0.2em] text-text-main hover:text-accent-rose">Social</a>
+                <a href="#commission" class="text-xs uppercase tracking-[0.2em] text-accent-rose font-bold">Inquire</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-overlay" class="fixed inset-0 bg-text-main/20 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="cart-drawer" class="fixed top-0 right-0 w-full md:w-[450px] h-full bg-white shadow-2xl z-50 cart-closed transition-transform duration-500 ease-in-out flex flex-col">
+        <div class="flex justify-between items-center p-8 border-b border-bg-secondary">
+            <h2 class="text-2xl font-heading">Your Collection</h2>
+            <button id="close-cart-btn" class="p-2 text-text-light hover:text-accent-rose transition-colors rounded-full hover:bg-bg-tertiary">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-8 space-y-6">
+            <div class="flex flex-col items-center justify-center h-full text-center text-text-light opacity-60">
+                <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                <p class="font-light tracking-wide">Your collection is currently empty.</p>
+            </div>
+        </div>
+
+        <div class="p-8 border-t border-bg-secondary bg-bg-tertiary">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-sm uppercase tracking-widest text-text-light">Subtotal</span>
+                <span id="cart-subtotal" class="text-2xl font-heading">$0.00</span>
+            </div>
+            <p class="text-xs text-text-light mb-6 font-light">Shipping and taxes calculated at checkout.</p>
+            <button class="w-full py-5 bg-text-main text-bg-primary rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-accent-rose hover:text-white transition-all duration-500 shadow-premium hover:shadow-premium-hover">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <div id="lightbox-modal" class="fixed inset-0 bg-text-main/95 backdrop-blur-xl z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-500">
+        <button id="lightbox-close" class="absolute top-8 right-8 p-3 text-white hover:text-accent-pink transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="max-w-5xl w-full p-6">
+            <img id="lightbox-image" src="" alt="Expanded View" class="w-full h-auto max-h-[85vh] object-contain shadow-2xl rounded-lg">
+            <div class="mt-6 text-center">
+                <h3 id="lightbox-title" class="text-3xl font-heading text-white mb-2"></h3>
+                <p id="lightbox-details" class="text-bg-secondary/70 tracking-widest uppercase text-sm"></p>
+            </div>
+        </div>
+    </div>
+
+    <header class="relative h-[78vh] min-h-[480px] md:h-[86vh] flex items-center justify-center text-center px-6 bg-cover bg-center" style="background-image: url('../hero.png'); background-position: center 34%;">
+        <div class="absolute inset-0 backdrop-blur-[1px] bg-black/5"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/48 via-black/30 to-[#2A221D]/26"></div>
+        <div class="absolute inset-0 bg-[#E7D5C3]/12"></div>
+        <div class="relative max-w-3xl mx-auto z-10">
+            <h1 class="text-6xl md:text-8xl font-heading tracking-tighter mb-6 text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.28)]">Art That Speaks</h1>
+            <p class="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-10 drop-shadow-[0_2px_14px_rgba(0,0,0,0.28)]">
+                A curated collection of fine art that transcends the ordinary, transforming spaces and inspiring minds.
+            </p>
+            <a href="#exhibitions" class="inline-flex items-center justify-center py-4 px-11 rounded-full uppercase tracking-[0.2em] text-sm font-semibold text-white bg-[#BA6F8C] border border-white/18 shadow-[0_6px_16px_rgba(0,0,0,0.18)] hover:bg-[#B06482] hover:shadow-[0_8px_18px_rgba(0,0,0,0.20)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                Explore The Collection
+            </a>
+        </div>
+    </header>
+
+    <section id="philosophy" class="py-32 px-6 lg:px-12 bg-bg-secondary">
+        <div class="max-w-[85rem] mx-auto grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div class="relative fade-in-section rounded-[2.5rem] overflow-hidden shadow-premium aspect-square md:aspect-auto md:h-[800px]">
+                <img src="../sweta.png" alt="Sweta in Studio" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-[2s] ease-out">
+                <div class="absolute inset-0 bg-text-main/5 mix-blend-overlay pointer-events-none"></div>
+            </div>
+            <div class="fade-in-section delay-100 md:pl-8">
+                <span class="block mb-6 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">The Artist</span>
+                <h2 class="text-5xl md:text-7xl font-heading mb-10 tracking-tight">About Sweta</h2>
+                <div class="space-y-8 text-lg lg:text-xl text-text-light font-light leading-[1.9]">
+                    <p>
+                        Sweta is a globally recognized artist and the winner of ASAS Dubai 2024. Her work blends precision, emotion, and intricate detailing, bringing life to every subject she captures.
+                    </p>
+                    <p>
+                        She specializes in custom paintings and sketches, creating deeply personal and expressive artworks tailored to each client. Based in Kanpur, India, Sweta is available for commissions worldwide.
+                    </p>
+                </div>
+                <div class="mt-16 border-t border-text-main/10 pt-10 flex items-center space-x-6">
+                    <img src="https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?auto=format&fit=crop&q=80&w=300" alt="Sweta's Signature" class="h-20 opacity-60 grayscale contrast-150 mix-blend-multiply">
+                    <div class="text-sm tracking-widest uppercase text-text-main">
+                        <span class="block font-bold">Sweta</span>
+                        <span class="block text-text-light">Founder & Lead Artist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-32 px-6 lg:px-12 bg-bg-primary">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <span class="block mb-4 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">Offerings</span>
+            <h2 class="text-5xl md:text-6xl font-heading tracking-tight mb-12">Services</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="bg-white p-8 rounded-2xl shadow-premium border border-bg-tertiary">
+                    <h3 class="text-xl font-heading mb-3">Custom Paintings</h3>
+                    <p class="text-text-light font-light">Deeply personal and expressive artworks tailored to each client, bringing your vision to life on canvas.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-premium border border-bg-tertiary">
+                    <h3 class="text-xl font-heading mb-3">Sketches</h3>
+                    <p class="text-text-light font-light">Intricate and detailed sketches that capture the essence of the subject with precision and emotion.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-premium border border-bg-tertiary">
+                    <h3 class="text-xl font-heading mb-3">Commission Work</h3>
+                    <p class="text-text-light font-light">Available for commissions worldwide. Get in touch to create a unique piece of art for your space.</p>
+                </div>
+            </div>
+            <p class="mt-12 text-lg text-text-light">Available for commissions — get in touch to discuss your project.</p>
+        </div>
+    </section>
+
+    <section id="exhibitions" class="py-32 px-6 lg:px-12 bg-bg-secondary border-t border-bg-tertiary">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-20 fade-in-section">
+                <span class="block mb-4 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">History</span>
+                <h2 class="text-5xl md:text-6xl font-heading tracking-tight">Exhibitions & Features</h2>
+            </div>
+            
+            <div class="space-y-12">
+                <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 border-b border-text-main/10 pb-12 fade-in-section">
+                    <div class="text-2xl font-heading text-accent-rose md:w-32">2026</div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-text-main mb-2">The Ethereal Form Solo Exhibition</h3>
+                        <p class="text-text-light font-light">Lumière Gallery, Paris, France. A complete retrospective of the last three years of work focusing on soft geometry and emotional resonance.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 border-b border-text-main/10 pb-12 fade-in-section delay-100">
+                    <div class="text-2xl font-heading text-accent-rose md:w-32">2025</div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-text-main mb-2">Modern Abstraction Collective</h3>
+                        <p class="text-text-light font-light">The Met Breuer, New York. Featured artist alongside 12 international contemporary abstractionists.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 border-b border-text-main/10 pb-12 fade-in-section delay-200">
+                    <div class="text-2xl font-heading text-accent-rose md:w-32">2024</div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-text-main mb-2">Whispers of Color</h3>
+                        <p class="text-text-light font-light">Oculus Design Center, London. A curated installation focusing on the psychological impact of pastel and minimalist palettes.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 fade-in-section delay-300">
+                    <div class="text-2xl font-heading text-accent-rose md:w-32">2023</div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-text-main mb-2">Emerging Voices in Canvas</h3>
+                        <p class="text-text-light font-light">National Gallery of Modern Art, New Delhi. First major institutional feature highlighting regional talent pushing global boundaries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6 lg:px-12 bg-bg-primary overflow-hidden">
+        <div class="max-w-[85rem] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                
+                <div class="fade-in-section p-8">
+                    <div class="flex justify-center mb-6 text-accent-rose">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    </div>
+                    <p class="text-lg text-text-light font-light leading-relaxed mb-6">"Sweta's work transforms the energy of a room entirely. The piece we commissioned brings an incredible sense of calm and sophistication to our main living space."</p>
+                    <span class="block text-xs uppercase tracking-widest font-bold">Elena R. — Private Collector</span>
+                </div>
+
+                <div class="fade-in-section delay-100 p-8 border-y md:border-y-0 md:border-x border-bg-secondary">
+                    <div class="flex justify-center mb-6 text-accent-rose">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    </div>
+                    <p class="text-lg text-text-light font-light leading-relaxed mb-6">"A masterclass in restraint. The subtle use of blush and oat tones creates a visual language that is both incredibly modern and deeply timeless."</p>
+                    <span class="block text-xs uppercase tracking-widest font-bold">The Modern Art Review</span>
+                </div>
+
+                <div class="fade-in-section delay-200 p-8">
+                    <div class="flex justify-center mb-6 text-accent-rose">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    </div>
+                    <p class="text-lg text-text-light font-light leading-relaxed mb-6">"Purchasing process was seamless, but the art itself is the real triumph. It breathes life into our minimalist architectural home without overpowering it."</p>
+                    <span class="block text-xs uppercase tracking-widest font-bold">Marcus T. — Architectural Designer</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="instagram" class="py-32 px-6 lg:px-12 bg-bg-tertiary">
+        <div class="max-w-[100rem] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-20 fade-in-section">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <span class="block mb-4 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">Social Journal</span>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading tracking-tight">The Studio Feed</h2>
+                </div>
+                <a href="https://instagram.com" target="_blank" class="inline-flex items-center space-x-2 border-b border-text-main/30 pb-1 text-xs font-semibold uppercase tracking-[0.2em] text-text-main hover:border-text-main hover:text-accent-rose transition-all duration-300">
+                    <span>@swetas_artverse</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 fade-in-section delay-100">
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/CeF2AJZh8_D/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/reel/DXMMXESEpb5/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/reel/DXJUyVvkgo0/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/reel/DWOp8RzkrjK/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DUYgan3kkQ9/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/reel/DUDTk3-Ei12/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DSHZceNkoNE/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DQFUfj2Ek9u/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DOrM00WEjW9/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DNqcfQHy_4G/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DGwIGAyhrwz/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DGkeY2oSDmw/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/DCl-tCISRn7/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/C8L2L_XRCvk/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/C2B5MIixLDs/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/CbPzWSDhH6N/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/CUM_YzSjvqN/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/CziyxwBRiJ8/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+                <div class="bg-white p-2 rounded-[2rem] shadow-premium hover:shadow-premium-hover transition-shadow duration-700 ease-out overflow-hidden flex justify-center">
+                    <iframe class="w-full max-w-[400px] h-[480px] border-none rounded-3xl" src="https://www.instagram.com/p/C2E8MUTRsK-/embed" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+            </div>
+            
+            <div class="mt-20 text-center fade-in-section">
+                <a href="https://instagram.com" target="_blank" class="inline-block border-b border-text-main/30 pb-1 text-xs uppercase tracking-[0.2em] font-semibold text-text-main hover:border-text-main transition-colors duration-300">View Full Instagram Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6 lg:px-12 bg-bg-primary">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="block mb-4 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">Information</span>
+                <h2 class="text-4xl md:text-5xl font-heading tracking-tight mb-4">Collector FAQs</h2>
+            </div>
+
+            <div class="space-y-4 fade-in-section delay-100">
+                <div class="border-b border-bg-secondary pb-4">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 focus:outline-none group">
+                        <span class="text-lg font-heading text-text-main group-hover:text-accent-rose transition-colors">Do you ship internationally?</span>
+                        <svg class="w-5 h-5 text-text-light transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content hidden text-text-light font-light pb-4">
+                        Yes, we offer worldwide shipping via fine art couriers. All pieces are professionally crated and insured. Shipping costs are calculated at checkout based on your location.
+                    </div>
+                </div>
+                <div class="border-b border-bg-secondary pb-4">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 focus:outline-none group">
+                        <span class="text-lg font-heading text-text-main group-hover:text-accent-rose transition-colors">Are the artworks framed?</span>
+                        <svg class="w-5 h-5 text-text-light transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content hidden text-text-light font-light pb-4">
+                        Original canvas works are sold unframed to allow collectors to choose frames that suit their interiors. Digital pigment prints are shipped rolled in protective tubes. Custom framing options are available upon special request.
+                    </div>
+                </div>
+                <div class="border-b border-bg-secondary pb-4">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 focus:outline-none group">
+                        <span class="text-lg font-heading text-text-main group-hover:text-accent-rose transition-colors">Do you take private commissions?</span>
+                        <svg class="w-5 h-5 text-text-light transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content hidden text-text-light font-light pb-4">
+                        Yes, Sweta accepts a limited number of private commissions each quarter. Please use the inquiry form below to discuss dimensions, color palettes, and your specific space.
+                    </div>
+                </div>
+                <div class="border-b border-bg-secondary pb-4">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 focus:outline-none group">
+                        <span class="text-lg font-heading text-text-main group-hover:text-accent-rose transition-colors">What is the return policy?</span>
+                        <svg class="w-5 h-5 text-text-light transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content hidden text-text-light font-light pb-4">
+                        We want you to be completely moved by your new artwork. If a piece doesn't fit your space, we offer a 14-day return window for original works, minus return shipping costs. Commissions are final sale.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="commission" class="py-32 px-6 lg:px-12 bg-bg-secondary">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-20 fade-in-section">
+                <span class="block mb-4 text-xs uppercase tracking-[0.3em] text-accent-rose font-semibold">Connect</span>
+                <h2 class="text-5xl md:text-6xl font-heading mb-6 tracking-tight">Commissions & Inquiries</h2>
+                <p class="text-text-light text-lg md:text-xl font-light">Currently accepting private commissions for the upcoming season.</p>
+            </div>
+
+            <form class="space-y-12 fade-in-section delay-100 bg-white p-12 md:p-20 rounded-[3rem] shadow-premium border border-bg-tertiary">
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="relative group">
+                        <input type="text" id="name" name="name" class="peer w-full border-b border-text-main/20 bg-transparent py-4 text-text-main text-lg placeholder-transparent focus:border-accent-rose focus:outline-none transition-colors" placeholder="Name" required />
+                        <label for="name" class="absolute left-0 top-4 text-text-light transition-all duration-300 cursor-text peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:-top-4 peer-focus:text-sm peer-focus:text-accent-rose">Your Name</label>
+                    </div>
+
+                    <div class="relative group">
+                        <input type="email" id="email" name="email" class="peer w-full border-b border-text-main/20 bg-transparent py-4 text-text-main text-lg placeholder-transparent focus:border-accent-rose focus:outline-none transition-colors" placeholder="Email" required />
+                        <label for="email" class="absolute left-0 top-4 text-text-light transition-all duration-300 cursor-text peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:-top-4 peer-focus:text-sm peer-focus:text-accent-rose">Email Address</label>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <select id="inquiry_type" name="inquiry_type" class="peer w-full border-b border-text-main/20 bg-transparent py-4 text-text-main text-lg focus:border-accent-rose focus:outline-none transition-colors appearance-none cursor-pointer">
+                        <option value="" disabled selected hidden></option>
+                        <option value="commission">Private Commission</option>
+                        <option value="purchase">Artwork Purchase Inquiry</option>
+                        <option value="exhibition">Exhibitions/Gallery Partnership</option>
+                        <option value="press">Press/Media</option>
+                    </select>
+                    <label for="inquiry_type" class="absolute left-0 -top-4 text-sm text-text-light transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:-top-4 peer-focus:text-sm peer-focus:text-accent-rose">Subject of Inquiry</label>
+                    <div class="absolute right-0 top-6 pointer-events-none text-text-light">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+
+                <div class="relative group pt-4">
+                    <textarea id="message" name="message" rows="4" class="peer w-full border-b border-text-main/20 bg-transparent py-4 text-text-main text-lg placeholder-transparent focus:border-accent-rose focus:outline-none transition-colors resize-none" placeholder="Message" required></textarea>
+                    <label for="message" class="absolute left-0 top-6 text-text-light transition-all duration-300 cursor-text peer-placeholder-shown:top-6 peer-placeholder-shown:text-lg peer-focus:-top-2 peer-focus:text-sm peer-focus:text-accent-rose">Tell me about your space...</label>
+                </div>
+
+                <div class="pt-8 text-center">
+                    <button type="button" class="w-full md:w-auto md:px-20 py-5 bg-text-main text-bg-primary rounded-full text-xs font-semibold uppercase tracking-[0.2em] hover:bg-accent-rose hover:text-white transition-all duration-500 shadow-premium hover:shadow-premium-hover hover:-translate-y-1">
+                        Send Inquiry
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-text-main text-bg-primary py-24 px-6 lg:px-12 border-t border-text-main/20">
+        <div class="max-w-[85rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2">
+                <span class="text-4xl font-heading tracking-tight text-accent-pink block mb-6">Sweta's Artverse.</span>
+                <p class="text-bg-secondary/60 text-sm font-light tracking-wide max-w-sm leading-relaxed mb-8">
+                    Elevating sophisticated living spaces through curated abstract fine art. Explore the intersection of soft geometry and evocative color palettes designed to heal and inspire.
+                </p>
+                <div class="relative max-w-xs group">
+                    <input type="email" class="w-full border-b border-bg-secondary/30 bg-transparent py-3 text-white text-sm focus:border-accent-pink focus:outline-none transition-colors" placeholder="Subscribe to Studio News">
+                    <button class="absolute right-0 top-3 text-bg-secondary/60 hover:text-accent-pink transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xs uppercase tracking-widest text-accent-pink font-semibold mb-6">Explore</h4>
+                <ul class="space-y-4 text-sm text-bg-secondary/70 font-light">
+                    <li class="hidden"><a href="#gallery" class="hover:text-white transition-colors">The Collection</a></li>
+                    <li><a href="#philosophy" class="hover:text-white transition-colors">Artist Philosophy</a></li>
+                    <li><a href="#exhibitions" class="hover:text-white transition-colors">Exhibitions</a></li>
+                    <li><a href="#commission" class="hover:text-white transition-colors">Commissions</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs uppercase tracking-widest text-accent-pink font-semibold mb-6">Connect</h4>
+                <ul class="space-y-4 text-sm text-bg-secondary/70 font-light">
+                    <li><a href="#" class="hover:text-white transition-colors">Instagram</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Pinterest</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Artsy Profile</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Contact Studio</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-[85rem] mx-auto border-t border-bg-secondary/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-bg-secondary/50 font-light">
+            <p>© 2026 Sweta's Artverse. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-white transition-colors">Shipping & Returns</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* =========================================================
+               1. MOBILE NAVIGATION TOGGLE
+            ========================================================= */
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const svg = menuBtn.querySelector('svg');
+                if(mobileMenu.classList.contains('hidden')){
+                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                } else {
+                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M6 18L18 6M6 6l12 12"></path>';
+                }
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuBtn.querySelector('svg').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                });
+            });
+
+            /* =========================================================
+               2. NAVBAR SCROLL DIRECTION INTERACTION
+            ========================================================= */
+            const mainNavbar = document.getElementById('main-navbar');
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            const minDelta = 8;
+
+            function updateNavbarOnScroll() {
+                const currentScrollY = window.scrollY;
+                const delta = currentScrollY - lastScrollY;
+
+                // Always show navbar near top for a clean return state.
+                if (currentScrollY <= 20) {
+                    mainNavbar.classList.remove('-translate-y-full');
+                    mainNavbar.classList.add('translate-y-0');
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                    return;
+                }
+
+                if (Math.abs(delta) >= minDelta) {
+                    if (delta > 0) {
+                        // Scrolling down: hide navbar smoothly.
+                        mainNavbar.classList.remove('translate-y-0');
+                        mainNavbar.classList.add('-translate-y-full');
+                    } else {
+                        // Scrolling up: reveal navbar smoothly.
+                        mainNavbar.classList.remove('-translate-y-full');
+                        mainNavbar.classList.add('translate-y-0');
+                    }
+                    lastScrollY = currentScrollY;
+                }
+
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateNavbarOnScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            /* =========================================================
+               3. SCROLL ANIMATION (INTERSECTION OBSERVER)
+            ========================================================= */
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-section').forEach((element) => {
+                observer.observe(element);
+            });
+
+            /* =========================================================
+               3. VANILLA JS E-COMMERCE SHOPPING CART
+            ========================================================= */
+            let cart = [];
+            const cartToggleBtn = document.getElementById('cart-toggle-btn');
+            const mobileCartToggleBtn = document.getElementById('mobile-cart-toggle-btn');
+            const cartDrawer = document.getElementById('cart-drawer');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const closeCartBtn = document.getElementById('close-cart-btn');
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const cartSubtotalEl = document.getElementById('cart-subtotal');
+            const cartBadges = [
+                document.getElementById('cart-badge'),
+                document.getElementById('mobile-cart-badge')
+            ];
+
+            function toggleCart() {
+                const isOpen = cartDrawer.classList.contains('cart-open');
+                if (isOpen) {
+                    cartDrawer.classList.remove('cart-open');
+                    cartDrawer.classList.add('cart-closed');
+                    cartOverlay.classList.remove('opacity-100');
+                    cartOverlay.classList.add('opacity-0');
+                    setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+                } else {
+                    cartOverlay.classList.remove('hidden');
+                    setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
+                    cartDrawer.classList.remove('cart-closed');
+                    cartDrawer.classList.add('cart-open');
+                }
+            }
+
+            cartToggleBtn.addEventListener('click', toggleCart);
+            mobileCartToggleBtn.addEventListener('click', toggleCart);
+            closeCartBtn.addEventListener('click', toggleCart);
+            cartOverlay.addEventListener('click', toggleCart);
+
+            function updateCartUI() {
+                // Update Badges
+                cartBadges.forEach(badge => {
+                    badge.textContent = cart.length;
+                    if(cart.length > 0) {
+                        badge.classList.remove('opacity-0');
+                    } else {
+                        badge.classList.add('opacity-0');
+                    }
+                });
+
+                // Calculate Subtotal
+                const subtotal = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+                cartSubtotalEl.textContent = `$${subtotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+                // Render Items
+                cartItemsContainer.innerHTML = '';
+                if(cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full text-center text-text-light opacity-60">
+                            <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            <p class="font-light tracking-wide">Your collection is currently empty.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex items-center gap-4 border-b border-bg-secondary pb-4';
+                    itemEl.innerHTML = `
+                        <img src="${item.img}" alt="${item.title}" class="w-20 h-24 object-cover rounded-md shadow-sm">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-heading font-bold text-text-main">${item.title}</h4>
+                            <p class="text-xs text-text-light mt-1">$${parseFloat(item.price).toLocaleString('en-US', {minimumFractionDigits: 2})}</p>
+                        </div>
+                        <button class="remove-item-btn p-2 text-text-light hover:text-accent-rose transition-colors" data-index="${index}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
+                });
+
+                // Attach remove event listeners
+                document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = e.currentTarget.getAttribute('data-index');
+                        cart.splice(idx, 1);
+                        updateCartUI();
+                    });
+                });
+            }
+
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent lightbox from opening
+                    const button = e.currentTarget;
+                    const item = {
+                        id: button.getAttribute('data-id'),
+                        title: button.getAttribute('data-title'),
+                        price: button.getAttribute('data-price'),
+                        img: button.getAttribute('data-img')
+                    };
+                    
+                    // Simple check if already in cart
+                    const exists = cart.find(i => i.id === item.id);
+                    if(!exists) {
+                        cart.push(item);
+                        updateCartUI();
+                        
+                        // Visual feedback on button
+                        const originalHTML = button.innerHTML;
+                        button.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path></svg>';
+                        button.classList.add('bg-accent-rose', 'text-white');
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalHTML;
+                            button.classList.remove('bg-accent-rose', 'text-white');
+                        }, 1500);
+
+                        toggleCart(); // Auto open cart to show user
+                    } else {
+                        alert('This unique original piece is already in your collection.');
+                    }
+                });
+            });
+
+            /* =========================================================
+               4. HIGH-END LIGHTBOX MODAL
+            ========================================================= */
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDetails = document.getElementById('lightbox-details');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            document.querySelectorAll('.lightbox-trigger').forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    lightboxImage.src = trigger.getAttribute('data-img');
+                    lightboxTitle.textContent = trigger.getAttribute('data-title');
+                    lightboxDetails.textContent = trigger.getAttribute('data-details');
+                    
+                    lightboxModal.classList.remove('hidden');
+                    setTimeout(() => lightboxModal.classList.add('opacity-100'), 10);
+                });
+            });
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxModal.addEventListener('click', (e) => {
+                if(e.target === lightboxModal) closeLightbox();
+            });
+
+            function closeLightbox() {
+                lightboxModal.classList.remove('opacity-100');
+                setTimeout(() => lightboxModal.classList.add('hidden'), 500);
+            }
+
+            /* =========================================================
+               5. FAQ ACCORDION LOGIC
+            ========================================================= */
+            document.querySelectorAll('.faq-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('svg');
+                    
+                    // Close others
+                    document.querySelectorAll('.faq-content').forEach(c => {
+                        if (c!== content) c.classList.add('hidden');
+                    });
+                    document.querySelectorAll('.faq-toggle svg').forEach(i => {
+                        if (i!== icon) i.classList.remove('rotate-180');
+                    });
+
+                    // Toggle current
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            /* =========================================================
+               6. COMMISSION FORM -> WHATSAPP REDIRECT
+            ========================================================= */
+            const commissionForm = document.querySelector('#commission form');
+            const sendInquiryBtn = commissionForm ? commissionForm.querySelector('button[type="button"]') : null;
+
+            if (commissionForm && sendInquiryBtn) {
+                sendInquiryBtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    if (!commissionForm.checkValidity()) {
+                        commissionForm.reportValidity();
+                        return;
+                    }
+
+                    const nameInput = commissionForm.querySelector('#name');
+                    const emailInput = commissionForm.querySelector('#email');
+                    const subjectSelect = commissionForm.querySelector('#inquiry_type');
+                    const messageInput = commissionForm.querySelector('#message');
+
+                    const name = nameInput ? nameInput.value.trim() : '';
+                    const email = emailInput ? emailInput.value.trim() : '';
+                    const subject = subjectSelect && subjectSelect.selectedIndex >= 0
+                        ? subjectSelect.options[subjectSelect.selectedIndex].text.trim()
+                        : '';
+                    const message = messageInput ? messageInput.value.trim() : '';
+
+                    const whatsappMessage = [
+                        "Hello, I'm interested in your artwork.",
+                        '',
+                        `Name: ${name}`,
+                        `Email: ${email}`,
+                        `Subject: ${subject || 'N/A'}`,
+                        `Message: ${message}`
+                    ].join('\n');
+
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    const whatsappUrl = `https://wa.me/918601168935?text=${encodedMessage}`;
+
+                    window.location.href = whatsappUrl;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
